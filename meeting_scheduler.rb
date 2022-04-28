@@ -4,8 +4,8 @@ require_relative 'errors'
 require_relative 'constants'
 
 class MeetingScheduler
-  attr_reader :meetings, :onsite_meetings, :offsite_meetings
-  attr_accessor :total_hours, :start_time, :scheduled_meetings
+  attr_reader :meetings, :onsite_meetings, :offsite_meetings,
+              :scheduled_meetings, :total_hours, :start_time
 
   def initialize(meetings, start_time = nil, total_hours = nil)
     @meetings = meetings
@@ -51,7 +51,7 @@ class MeetingScheduler
 
       raise Errors::ScheduleError.new if total_hours.negative?
 
-      scheduled_meetings << formatted_meeting_output(meeting)
+      @scheduled_meetings << formatted_meeting_output(meeting)
 
       @start_time = @end_time
     end
@@ -66,7 +66,7 @@ class MeetingScheduler
 
       raise Errors::ScheduleError.new if total_hours.negative?
 
-      scheduled_meetings << formatted_meeting_output(meeting)
+      @scheduled_meetings << formatted_meeting_output(meeting)
 
       @start_time = @end_time
     end
