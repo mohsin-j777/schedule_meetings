@@ -26,9 +26,9 @@ class MeetingScheduler
       schedule_onsite_meetings
       schedule_offsite_meetings
 
-      scheduled_meetings.each { |meeting| puts meeting }
+      scheduled_meetings
     rescue Errors::ScheduleError => e
-      puts "#{e.message}"
+      "#{e.message}"
     end
   end
 
