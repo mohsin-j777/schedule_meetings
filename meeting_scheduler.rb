@@ -62,7 +62,7 @@ class MeetingScheduler
       @start_time += gap_in_offsite_meetings
 
       @end_time = start_time + meeting[:duration].hours
-      @total_hours = total_hours - 0.5 - meeting[:duration]
+      @total_hours = total_hours - gap_in_duration_from_offsite_meetings - meeting[:duration]
 
       raise Errors::ScheduleError.new if total_hours.negative?
 
@@ -74,6 +74,10 @@ class MeetingScheduler
 
   def gap_in_offsite_meetings
     30.minutes
+  end
+
+  def gap_in_duration_from_offsite_meetings
+    gap_in_offsite_meetings / 3600.to_f
   end
 
   def formatted_meeting_output(meeting)
