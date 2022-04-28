@@ -32,6 +32,8 @@ class MeetingScheduler
     end
   end
 
+  private
+
   def can_schedule_meetings?
     relevant_meetings = meetings.select { |meeting| meeting[:type].eql?(ON_SITE) || meeting[:type].eql?(OFF_SITE) }
     durations = relevant_meetings.map { |meeting| meeting[:duration] }
