@@ -14,7 +14,7 @@ or it is not possible to schedule meetings within durations during scheduling
 
 # constants.rb
 
-As meeting types are constant and not changing therefore it is defined as constant and being used in meeting_scheduler class
+As meeting types are constant and not changing therefore it is defined as constant and being used in MeetingScheduler class
 
 # helper.rb
 
