@@ -5,7 +5,7 @@ require_relative 'constants'
 
 class MeetingScheduler
   attr_reader :meetings, :onsite_meetings, :offsite_meetings,
-              :scheduled_meetings, :total_hours, :start_time
+              :scheduled_meetings, :start_time, :total_hours
 
   def initialize(meetings, start_time = nil, total_hours = nil)
     @meetings = meetings
@@ -58,17 +58,19 @@ class MeetingScheduler
   end
 
   def schedule_offsite_meetings
-    offsite_meetings.each do |meeting|
-      @start_time += gap_in_offsite_meetings
+    @start_time += gap_in_offsite_meetings if scheduled_meetings.any?
 
+    offsite_meetings.each do |meeting|
       @end_time = start_time + meeting[:duration].hours
-      @total_hours = total_hours - gap_in_duration_from_offsite_meetings - meeting[:duration]
+      @total_hours -= meeting[:duration]
+
+      @total_hours -= gap_in_duration_from_offsite_meetings if scheduled_meetings.any?
 
       raise Errors::ScheduleError.new if total_hours.negative?
 
       @scheduled_meetings << formatted_meeting_output(meeting)
 
-      @start_time = @end_time
+      @start_time = @end_time + gap_in_offsite_meetings
     end
   end
 
